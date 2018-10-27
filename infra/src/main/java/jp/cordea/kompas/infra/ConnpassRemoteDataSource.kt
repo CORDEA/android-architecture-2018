@@ -1,8 +1,10 @@
 package jp.cordea.kompas.infra
 
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import jp.cordea.kompas.infra.events.EventsResponse
+import jp.cordea.kompas.infra.favorite.Favorite
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,6 +17,18 @@ internal class ConnpassRemoteDataSource @Inject constructor(
             apiClient.getEvents(keyword, EVENT_LIMIT)
                     .doOnSuccess { localDataSource.cacheEvents(keyword, it) }
                     .subscribeOn(Schedulers.io())
+
+    override fun getFavorite(eventId: Int): Maybe<Favorite> {
+        throw NotImplementedError()
+    }
+
+    override fun favorite(eventId: Int) {
+        throw NotImplementedError()
+    }
+
+    override fun unfavorite(favorite: Favorite) {
+        throw NotImplementedError()
+    }
 
     companion object {
         private const val EVENT_LIMIT = 10
