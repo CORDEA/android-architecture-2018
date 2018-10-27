@@ -4,22 +4,49 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityMainBinding
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+
+    @Inject
+    lateinit var adapter: MainAdapter
+
+    @Inject
+    lateinit var presenter: MainContract.Presenter
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil
-                .setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.recyclerView.adapter = adapter
+        presenter.create()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.destroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        val view = menu.findItem(R.id.action_search).actionView as SearchView
+        view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { presenter.onQueryTextSubmit(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean = false
+        })
         return true
     }
 
@@ -28,4 +55,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_search -> true
                 else -> super.onOptionsItemSelected(item)
             }
+
+    override fun startLoading() {
+        adapter.clear()
+        binding.recyclerView.isVisible = false
+        binding.progressBar.isVisible = true
+    }
+
+    override fun endLoading() {
+        binding.recyclerView.isVisible = true
+        binding.progressBar.isVisible = false
+    }
+
+    override fun addItem(model: MainListItemViewModel) {
+        adapter.add(model)
+    }
 }
