@@ -9,4 +9,5 @@
     <color name="secondaryTextColor">#ffffff</color>
     <color name="textColor">#212121</color>
     <color name="textSecondaryColor">#727272</color>
+    <color name="backgroundFloatingColor">#ffffff</color>
 </resources>

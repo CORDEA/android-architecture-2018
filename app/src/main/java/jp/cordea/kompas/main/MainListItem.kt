@@ -8,13 +8,15 @@ import javax.inject.Inject
 
 class MainListItemViewModel(
         val title: String,
-        val description: String
+        val description: String,
+        val author: String
 ) {
     companion object {
         fun from(eventResponse: EventResponse) =
                 MainListItemViewModel(
                         eventResponse.title,
-                        eventResponse.description
+                        eventResponse.catch,
+                        eventResponse.ownerNickname
                 )
     }
 }
