@@ -8,13 +8,12 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(
-        modules = [
-            AndroidSupportInjectionModule::class,
-            AppModule::class,
-            ActivityModule::class
-        ]
-)
+@Component(modules = [
+    AndroidSupportInjectionModule::class,
+    AppModule::class,
+    RepositoryModule::class,
+    ActivityModule::class
+])
 interface AppComponent : AndroidInjector<KompasApplication> {
     @Component.Builder
     interface Builder {
