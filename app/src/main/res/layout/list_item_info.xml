@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="jp.cordea.kompas.detail.InfoListItemViewModel" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
@@ -22,8 +29,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
+                android:text="@{vm.date}"
                 android:textColor="@color/textColor"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +44,8 @@
                 android:id="@+id/time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
+                android:layout_marginBottom="24dp"
+                android:text="@{vm.time}"
                 android:textColor="@color/textSecondaryColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/limit_icon"
@@ -59,6 +69,7 @@
                 android:id="@+id/limit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{vm.limit}"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/limit_icon"
                 app:layout_constraintEnd_toEndOf="parent"

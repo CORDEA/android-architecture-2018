@@ -1,7 +1,7 @@
 package jp.cordea.kompas.detail
 
 import androidx.core.text.HtmlCompat
-import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
+import androidx.core.text.HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING
 import com.xwray.groupie.databinding.BindableItem
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ListItemDescriptionBinding
@@ -24,6 +24,9 @@ class DescriptionListItem @Inject constructor() : BindableItem<ListItemDescripti
     override fun getLayout(): Int = R.layout.list_item_description
 
     override fun bind(binding: ListItemDescriptionBinding, position: Int) {
-        binding.description.text = HtmlCompat.fromHtml(model.description, FROM_HTML_MODE_COMPACT)
+        binding.description.text = HtmlCompat.fromHtml(
+                model.description,
+                FROM_HTML_SEPARATOR_LINE_BREAK_HEADING
+        )
     }
 }

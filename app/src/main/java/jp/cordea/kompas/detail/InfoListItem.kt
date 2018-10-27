@@ -4,13 +4,15 @@ import com.xwray.groupie.databinding.BindableItem
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ListItemInfoBinding
 import jp.cordea.kompas.main.MainListItemViewModel
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.ISODateTimeFormat
 import javax.inject.Inject
 
 class InfoListItemViewModel(
-        private val startedAt: String,
-        private val endedAt: String,
-        private val limit: Int,
-        private val accepted: Int
+        rawStartedAt: String,
+        rawEndedAt: String,
+        limit: Int,
+        accepted: Int
 ) {
     companion object {
         fun from(model: MainListItemViewModel) =
@@ -21,6 +23,13 @@ class InfoListItemViewModel(
                         model.accepted
                 )
     }
+
+    private val startedAt = ISODateTimeFormat.dateTimeParser().parseDateTime(rawStartedAt)
+    private val endedAt = ISODateTimeFormat.dateTimeParser().parseDateTime(rawEndedAt)
+
+    val date = DateTimeFormat.forPattern("yyyy-MM-dd").print(startedAt)
+    val time = DateTimeFormat.forPattern("HH:mm").run { "${print(startedAt)} ~ ${print(endedAt)}" }
+    val limit = "$accepted / $limit"
 }
 
 class InfoListItem @Inject constructor() : BindableItem<ListItemInfoBinding>() {
@@ -31,5 +40,6 @@ class InfoListItem @Inject constructor() : BindableItem<ListItemInfoBinding>() {
     override fun getLayout(): Int = R.layout.list_item_info
 
     override fun bind(binding: ListItemInfoBinding, position: Int) {
+        binding.vm = model
     }
 }
