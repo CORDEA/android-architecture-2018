@@ -1,6 +1,9 @@
 package jp.cordea.kompas
 
 import dagger.Module
+import jp.cordea.kompas.main.MainActivityModule
 
-@Module
+@Module(includes = [
+    MainActivityModule::class
+])
 interface ActivityModule
