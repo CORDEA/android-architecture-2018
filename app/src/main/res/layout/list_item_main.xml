@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@{vm.description}"
+                android:text="@{vm.catch}"
                 android:textColor="@color/textSecondaryColor"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
