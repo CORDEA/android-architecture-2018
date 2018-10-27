@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
@@ -18,7 +19,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     lateinit var adapter: DetailAdapter
 
     @Inject
-    lateinit var presenter: DetailPresenter
+    lateinit var presenter: DetailContract.Presenter
 
     private lateinit var binding: ActivityDetailBinding
 
@@ -34,6 +35,9 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
             title = model.title
             setDisplayHomeAsUpEnabled(true)
         }
+
+        binding.favorite.setOnClickListener { presenter.clickedFavorite() }
+        binding.unfavorite.setOnClickListener { presenter.clickedUnfavorite() }
 
         adapter.updateDescription(DescriptionListItemViewModel.from(model))
         adapter.updateInfo(InfoListItemViewModel.from(model))
@@ -54,13 +58,13 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     }
 
     override fun favorite() {
-        binding.unfavorite.hide()
-        binding.favorite.show()
+        binding.unfavorite.isVisible = false
+        binding.favorite.isVisible = true
     }
 
     override fun unfavorite() {
-        binding.favorite.hide()
-        binding.unfavorite.show()
+        binding.favorite.isVisible = false
+        binding.unfavorite.isVisible = true
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package jp.cordea.kompas.infra
 
+import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -22,11 +23,11 @@ internal class ConnpassRemoteDataSource @Inject constructor(
         throw NotImplementedError()
     }
 
-    override fun favorite(eventId: Int) {
+    override fun favorite(eventId: Int): Completable {
         throw NotImplementedError()
     }
 
-    override fun unfavorite(favorite: Favorite) {
+    override fun unfavorite(eventId: Int): Completable {
         throw NotImplementedError()
     }
 

@@ -17,11 +17,7 @@ internal class ConnpassRepositoryImpl @Inject constructor(
 
     override fun getFavorite(eventId: Int): Maybe<Favorite> = localDataSource.getFavorite(eventId)
 
-    override fun favorite(eventId: Int) {
-        localDataSource.favorite(eventId)
-    }
+    override fun favorite(eventId: Int) = localDataSource.favorite(eventId)
 
-    override fun unfavorite(favorite: Favorite) {
-        localDataSource.unfavorite(favorite)
-    }
+    override fun unfavorite(eventId: Int) = localDataSource.unfavorite(eventId)
 }

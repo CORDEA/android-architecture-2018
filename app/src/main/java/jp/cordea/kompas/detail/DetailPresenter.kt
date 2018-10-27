@@ -1,7 +1,8 @@
 package jp.cordea.kompas.detail
 
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.SerialDisposable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import jp.cordea.kompas.ActivityScope
 import jp.cordea.kompas.infra.ConnpassRepository
 import jp.cordea.kompas.main.MainListItemViewModel
@@ -15,7 +16,8 @@ interface DetailContract {
 
     interface Presenter {
         fun create(model: MainListItemViewModel)
-        fun clickedFab()
+        fun clickedFavorite()
+        fun clickedUnfavorite()
         fun destroy()
     }
 }
@@ -25,7 +27,7 @@ class DetailPresenter @Inject constructor(
         private val repository: ConnpassRepository,
         private val view: DetailContract.View
 ) : DetailContract.Presenter {
-    private val serialDisposable = SerialDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     private lateinit var model: MainListItemViewModel
 
@@ -41,7 +43,6 @@ class DetailPresenter @Inject constructor(
 
     override fun create(model: MainListItemViewModel) {
         this.model = model
-
         repository.getFavorite(model.eventId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -51,15 +52,32 @@ class DetailPresenter @Inject constructor(
                 }, {
                     isFavorite = false
                 })
-                .run(serialDisposable::set)
+                .addTo(compositeDisposable)
     }
 
-    override fun clickedFab() {
+    override fun clickedFavorite() {
+        repository.unfavorite(model.eventId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isFavorite = false
+                }, {
+                    it.printStackTrace()
+                })
+                .addTo(compositeDisposable)
+    }
+
+    override fun clickedUnfavorite() {
         repository.favorite(model.eventId)
-        isFavorite = !isFavorite
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isFavorite = true
+                }, {
+                    it.printStackTrace()
+                })
+                .addTo(compositeDisposable)
     }
 
     override fun destroy() {
-        serialDisposable.dispose()
+        compositeDisposable.dispose()
     }
 }
