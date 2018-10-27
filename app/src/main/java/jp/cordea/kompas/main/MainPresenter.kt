@@ -4,6 +4,7 @@ import android.os.Bundle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
+import jp.cordea.kompas.ActivityScope
 import jp.cordea.kompas.infra.ConnpassRepository
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ interface MainContract {
     }
 }
 
+@ActivityScope
 class MainPresenter @Inject constructor(
         private val repository: ConnpassRepository,
         private val view: MainContract.View

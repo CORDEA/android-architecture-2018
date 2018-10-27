@@ -34,7 +34,9 @@ class MainListItemViewModel(
     }
 }
 
-class MainListItem @Inject constructor() : BindableItem<ListItemMainBinding>() {
+class MainListItem @Inject constructor(
+        private val navigator: MainNavigator
+) : BindableItem<ListItemMainBinding>() {
     private lateinit var model: MainListItemViewModel
 
     fun update(model: MainListItemViewModel) = apply { this.model = model }
@@ -43,5 +45,8 @@ class MainListItem @Inject constructor() : BindableItem<ListItemMainBinding>() {
 
     override fun bind(binding: ListItemMainBinding, position: Int) {
         binding.vm = model
+        binding.root.setOnClickListener {
+            navigator.navigateToDetail(model)
+        }
     }
 }
