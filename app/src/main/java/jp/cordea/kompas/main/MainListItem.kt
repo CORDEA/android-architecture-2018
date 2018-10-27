@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 @Parcelize
 class MainListItemViewModel(
+        val eventId: Int,
         val title: String,
         val catch: String,
         val author: String,
@@ -22,6 +23,7 @@ class MainListItemViewModel(
     companion object {
         fun from(response: EventResponse) =
                 MainListItemViewModel(
+                        response.eventId,
                         response.title,
                         response.catch,
                         response.ownerNickname,
