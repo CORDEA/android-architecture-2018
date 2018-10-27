@@ -7,12 +7,14 @@ import javax.inject.Singleton
 
 @Singleton
 internal class ConnpassLocalDataSource @Inject constructor() {
+    private var keyword: String? = null
     private var events: EventsResponse? = null
 
-    fun getEvents(): Maybe<EventsResponse> =
-            if (events == null) Maybe.empty() else Maybe.just(events)
+    fun getEvents(keyword: String): Maybe<EventsResponse> =
+            if (events == null || this.keyword != keyword) Maybe.empty() else Maybe.just(events)
 
-    fun cacheEvents(events: EventsResponse) {
+    fun cacheEvents(keyword: String, events: EventsResponse) {
+        this.keyword = keyword
         this.events = events
     }
 }

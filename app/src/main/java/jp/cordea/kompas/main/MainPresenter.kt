@@ -1,5 +1,6 @@
 package jp.cordea.kompas.main
 
+import android.os.Bundle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
@@ -14,8 +15,10 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun create()
+        val currentQuery: String
+        fun create(savedInstanceState: Bundle?)
         fun onQueryTextSubmit(query: String)
+        fun saveInstanceState(outState: Bundle?)
         fun destroy()
     }
 }
@@ -26,11 +29,17 @@ class MainPresenter @Inject constructor(
 ) : MainContract.Presenter {
     private val serialDisposable = SerialDisposable()
 
-    override fun create() {
+    private var _currentQuery: String? = null
+    override val currentQuery: String get() = _currentQuery ?: ""
+
+    override fun create(savedInstanceState: Bundle?) {
         view.endLoading()
+        val query = savedInstanceState?.getString(QUERY_KEY) ?: return
+        onQueryTextSubmit(query)
     }
 
     override fun onQueryTextSubmit(query: String) {
+        _currentQuery = query
         view.startLoading()
         repository.getEvents(query)
                 .map { it.events }
@@ -51,7 +60,16 @@ class MainPresenter @Inject constructor(
                 .run(serialDisposable::set)
     }
 
+    override fun saveInstanceState(outState: Bundle?) {
+        val state = outState ?: return
+        _currentQuery?.let { state.putString(QUERY_KEY, it) }
+    }
+
     override fun destroy() {
         serialDisposable.dispose()
+    }
+
+    companion object {
+        private const val QUERY_KEY = "QUERY_KEY"
     }
 }

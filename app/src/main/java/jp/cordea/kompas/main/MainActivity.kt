@@ -28,7 +28,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.recyclerView.adapter = adapter
-        presenter.create()
+        presenter.create(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        presenter.saveInstanceState(outState)
     }
 
     override fun onDestroy() {
@@ -39,6 +44,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val view = menu.findItem(R.id.action_search).actionView as SearchView
+        view.setQuery(presenter.currentQuery, false)
         view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { presenter.onQueryTextSubmit(it) }

@@ -13,7 +13,7 @@ internal class ConnpassRemoteDataSource @Inject constructor(
 ) : ConnpassRepository {
     override fun getEvents(keyword: String): Single<EventsResponse> =
             apiClient.getEvents(keyword, EVENT_LIMIT)
-                    .doOnSuccess { localDataSource.cacheEvents(it) }
+                    .doOnSuccess { localDataSource.cacheEvents(keyword, it) }
                     .subscribeOn(Schedulers.io())
 
     companion object {

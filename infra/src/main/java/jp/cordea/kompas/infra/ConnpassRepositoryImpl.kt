@@ -11,5 +11,5 @@ internal class ConnpassRepositoryImpl @Inject constructor(
         private val localDataSource: ConnpassLocalDataSource
 ) : ConnpassRepository {
     override fun getEvents(keyword: String): Single<EventsResponse> =
-            localDataSource.getEvents().switchIfEmpty(remoteDataSource.getEvents(keyword))
+            localDataSource.getEvents(keyword).switchIfEmpty(remoteDataSource.getEvents(keyword))
 }
