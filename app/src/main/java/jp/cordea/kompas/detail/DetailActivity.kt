@@ -12,10 +12,13 @@ import jp.cordea.kompas.databinding.ActivityDetailBinding
 import jp.cordea.kompas.main.MainListItemViewModel
 import javax.inject.Inject
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     @Inject
     lateinit var adapter: DetailAdapter
+
+    @Inject
+    lateinit var presenter: DetailPresenter
 
     private lateinit var binding: ActivityDetailBinding
 
@@ -34,6 +37,12 @@ class DetailActivity : AppCompatActivity() {
 
         adapter.updateDescription(DescriptionListItemViewModel.from(model))
         adapter.updateInfo(InfoListItemViewModel.from(model))
+        presenter.create(model)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.destroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -42,6 +51,16 @@ class DetailActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun favorite() {
+        binding.unfavorite.hide()
+        binding.favorite.show()
+    }
+
+    override fun unfavorite() {
+        binding.favorite.hide()
+        binding.unfavorite.show()
     }
 
     companion object {
