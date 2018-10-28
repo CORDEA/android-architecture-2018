@@ -27,9 +27,10 @@ class InfoListItemViewModel(
     private val startedAt = ISODateTimeFormat.dateTimeParser().parseDateTime(rawStartedAt)
     private val endedAt = ISODateTimeFormat.dateTimeParser().parseDateTime(rawEndedAt)
 
-    val date = DateTimeFormat.forPattern("yyyy-MM-dd").print(startedAt)
-    val time = DateTimeFormat.forPattern("HH:mm").run { "${print(startedAt)} ~ ${print(endedAt)}" }
-    val limit = "$accepted / $limit"
+    val date: String = DateTimeFormat.forPattern("yyyy-MM-dd").print(startedAt)
+    val time: String =
+            DateTimeFormat.forPattern("HH:mm").run { "${print(startedAt)} ~ ${print(endedAt)}" }
+    val limit: String = "$accepted / $limit"
 }
 
 class InfoListItem @Inject constructor() : BindableItem<ListItemInfoBinding>() {
