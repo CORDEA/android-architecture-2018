@@ -19,15 +19,15 @@ internal class ConnpassRemoteDataSource @Inject constructor(
                     .doOnSuccess { localDataSource.cacheEvents(keyword, it) }
                     .subscribeOn(Schedulers.io())
 
-    override fun getFavorite(eventId: Int): Maybe<Favorite> {
+    override fun getFavorite(eventId: EventId): Maybe<Favorite> {
         throw NotImplementedError()
     }
 
-    override fun favorite(eventId: Int): Completable {
+    override fun favorite(eventId: EventId): Completable {
         throw NotImplementedError()
     }
 
-    override fun unfavorite(eventId: Int): Completable {
+    override fun unfavorite(eventId: EventId): Completable {
         throw NotImplementedError()
     }
 

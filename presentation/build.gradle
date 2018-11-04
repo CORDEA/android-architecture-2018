@@ -8,3 +8,9 @@ dependencies {
 
     api 'io.reactivex.rxjava2:rxkotlin:2.3.0'
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}

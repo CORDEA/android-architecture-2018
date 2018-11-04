@@ -3,6 +3,7 @@ package jp.cordea.kompas.presentation.detail
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import jp.cordea.kompas.infra.ConnpassRepository
+import jp.cordea.kompas.infra.EventId
 import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.presentation.SchedulerProvider
 import javax.inject.Inject
@@ -14,7 +15,7 @@ interface DetailContract {
     }
 
     interface Presenter {
-        fun create(eventId: Int)
+        fun create(eventId: EventId)
         fun clickedFavorite()
         fun clickedUnfavorite()
         fun destroy()
@@ -29,7 +30,7 @@ class DetailPresenter @Inject constructor(
 ) : DetailContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
 
-    private var eventId: Int = 0
+    private var eventId: EventId = EventId.EMPTY
 
     private var isFavorite: Boolean = false
         set(value) {
@@ -41,7 +42,7 @@ class DetailPresenter @Inject constructor(
             }
         }
 
-    override fun create(eventId: Int) {
+    override fun create(eventId: EventId) {
         this.eventId = eventId
         repository.getFavorite(eventId)
                 .observeOn(schedulerProvider.ui)

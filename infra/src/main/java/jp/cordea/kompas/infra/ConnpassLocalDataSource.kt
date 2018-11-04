@@ -26,24 +26,24 @@ internal class ConnpassLocalDataSource @Inject constructor(
         this.events = events
     }
 
-    fun getFavorite(eventId: Int): Maybe<Favorite> =
-            daoProvider.favoriteDao.getFavorite(eventId)
+    fun getFavorite(eventId: EventId): Maybe<Favorite> =
+            daoProvider.favoriteDao.getFavorite(eventId.value)
                     .subscribeOn(Schedulers.io())
 
-    fun favorite(eventId: Int): Completable =
+    fun favorite(eventId: EventId): Completable =
             Completable.create {
                 daoProvider.favoriteDao.insertFavorite(
                         Favorite(
-                                eventId,
+                                eventId.value,
                                 ISODateTimeFormat.dateTime().print(DateTime())
                         )
                 )
                 it.onComplete()
             }.subscribeOn(Schedulers.io())
 
-    fun unfavorite(eventId: Int): Completable =
+    fun unfavorite(eventId: EventId): Completable =
             Completable.create {
-                daoProvider.favoriteDao.deleteFavorite(eventId)
+                daoProvider.favoriteDao.deleteFavorite(eventId.value)
                 it.onComplete()
             }.subscribeOn(Schedulers.io())
 }

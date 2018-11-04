@@ -8,7 +8,7 @@ import jp.cordea.kompas.infra.favorite.Favorite
 
 interface ConnpassRepository {
     fun getEvents(keyword: String): Single<EventsResponse>
-    fun getFavorite(eventId: Int): Maybe<Favorite>
-    fun favorite(eventId: Int): Completable
-    fun unfavorite(eventId: Int): Completable
+    fun getFavorite(eventId: EventId): Maybe<Favorite>
+    fun favorite(eventId: EventId): Completable
+    fun unfavorite(eventId: EventId): Completable
 }

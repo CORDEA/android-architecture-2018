@@ -14,3 +14,9 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.3'
     api 'com.google.dagger:dagger-android:2.18'
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}

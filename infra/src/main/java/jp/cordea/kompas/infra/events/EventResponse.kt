@@ -1,9 +1,10 @@
 package jp.cordea.kompas.infra.events
 
 import com.google.gson.annotations.SerializedName
+import jp.cordea.kompas.infra.EventId
 
 class EventResponse(
-        @SerializedName("event_id") val eventId: Int,
+        @SerializedName("event_id") val eventId: EventId,
         @SerializedName("title") val title: String,
         @SerializedName("catch") val catch: String,
         @SerializedName("description") val description: String,
