@@ -12,7 +12,6 @@ import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityDetailBinding
 import jp.cordea.kompas.main.MainListItemViewModel
 import jp.cordea.kompas.presentation.detail.DetailContract
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {
@@ -43,7 +42,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
         adapter.updateDescription(DescriptionListItemViewModel.from(model))
         adapter.updateInfo(InfoListItemViewModel.from(model))
-        presenter.create(model)
+        presenter.create(model.eventId)
     }
 
     override fun onDestroy() {

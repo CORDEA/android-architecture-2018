@@ -10,8 +10,8 @@ import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityMainBinding
+import jp.cordea.kompas.infra.events.EventResponse
 import jp.cordea.kompas.presentation.main.MainContract
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -75,8 +75,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.progressBar.isVisible = false
     }
 
-    override fun addItem(model: MainListItemViewModel) {
-        adapter.add(model)
+    override fun addItem(response: EventResponse) {
+        adapter.add(response)
     }
 
     companion object {

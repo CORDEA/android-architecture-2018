@@ -3,6 +3,7 @@ package jp.cordea.kompas.presentation.main
 import io.reactivex.Observable
 import io.reactivex.disposables.SerialDisposable
 import jp.cordea.kompas.infra.ConnpassRepository
+import jp.cordea.kompas.infra.events.EventResponse
 import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.presentation.SchedulerProvider
 import javax.inject.Inject
@@ -11,7 +12,7 @@ interface MainContract {
     interface View {
         fun startLoading()
         fun endLoading()
-        fun addItem(model: MainListItemViewModel)
+        fun addItem(response: EventResponse)
     }
 
     interface Presenter {
@@ -44,9 +45,8 @@ class MainPresenter @Inject constructor(
         repository.getEvents(query)
                 .map { it.events }
                 .filter { it.isNotEmpty() }
-                .flatMapObservable { list ->
-                    Observable.fromIterable(list)
-                            .map { MainListItemViewModel.from(it) }
+                .flatMapObservable {
+                    Observable.fromIterable(it)
                 }
                 .observeOn(schedulerProvider.ui)
                 .subscribe({

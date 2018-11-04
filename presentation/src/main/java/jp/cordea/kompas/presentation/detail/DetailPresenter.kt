@@ -5,7 +5,6 @@ import io.reactivex.rxkotlin.addTo
 import jp.cordea.kompas.infra.ConnpassRepository
 import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.presentation.SchedulerProvider
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 interface DetailContract {
@@ -15,7 +14,7 @@ interface DetailContract {
     }
 
     interface Presenter {
-        fun create(model: MainListItemViewModel)
+        fun create(eventId: Int)
         fun clickedFavorite()
         fun clickedUnfavorite()
         fun destroy()
@@ -30,7 +29,7 @@ class DetailPresenter @Inject constructor(
 ) : DetailContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
 
-    private lateinit var model: MainListItemViewModel
+    private var eventId: Int = 0
 
     private var isFavorite: Boolean = false
         set(value) {
@@ -42,9 +41,9 @@ class DetailPresenter @Inject constructor(
             }
         }
 
-    override fun create(model: MainListItemViewModel) {
-        this.model = model
-        repository.getFavorite(model.eventId)
+    override fun create(eventId: Int) {
+        this.eventId = eventId
+        repository.getFavorite(eventId)
                 .observeOn(schedulerProvider.ui)
                 .subscribe({
                     isFavorite = true
@@ -57,7 +56,7 @@ class DetailPresenter @Inject constructor(
     }
 
     override fun clickedFavorite() {
-        repository.unfavorite(model.eventId)
+        repository.unfavorite(eventId)
                 .observeOn(schedulerProvider.ui)
                 .subscribe({
                     isFavorite = false
@@ -68,7 +67,7 @@ class DetailPresenter @Inject constructor(
     }
 
     override fun clickedUnfavorite() {
-        repository.favorite(model.eventId)
+        repository.favorite(eventId)
                 .observeOn(schedulerProvider.ui)
                 .subscribe({
                     isFavorite = true

@@ -3,7 +3,6 @@ package jp.cordea.kompas.main
 import android.app.Activity
 import jp.cordea.kompas.detail.DetailActivity
 import jp.cordea.kompas.presentation.ActivityScope
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 @ActivityScope
