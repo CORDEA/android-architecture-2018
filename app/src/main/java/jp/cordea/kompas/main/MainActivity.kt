@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityMainBinding
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -29,12 +28,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.recyclerView.adapter = adapter
-        presenter.create(savedInstanceState)
+        presenter.create(savedInstanceState?.getString(QUERY_KEY) ?: "")
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        presenter.saveInstanceState(outState)
+        outState?.putString(QUERY_KEY, presenter.currentQuery)
     }
 
     override fun onDestroy() {
@@ -76,5 +75,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun addItem(model: MainListItemViewModelImpl) {
         adapter.add(model)
+    }
+
+    companion object {
+        private const val QUERY_KEY = "QUERY_KEY"
     }
 }

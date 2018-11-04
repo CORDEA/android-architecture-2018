@@ -1,12 +1,10 @@
 package jp.cordea.kompas.main
 
-import android.os.Bundle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
-import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.infra.ConnpassRepository
-import jp.cordea.kompas.presentation.main.MainListItemViewModel
+import jp.cordea.kompas.presentation.ActivityScope
 import javax.inject.Inject
 
 interface MainContract {
@@ -18,9 +16,8 @@ interface MainContract {
 
     interface Presenter {
         val currentQuery: String
-        fun create(savedInstanceState: Bundle?)
+        fun create(savedQuery: String)
         fun onQueryTextSubmit(query: String)
-        fun saveInstanceState(outState: Bundle?)
         fun destroy()
     }
 }
@@ -32,17 +29,16 @@ class MainPresenter @Inject constructor(
 ) : MainContract.Presenter {
     private val serialDisposable = SerialDisposable()
 
-    private var _currentQuery: String? = null
-    override val currentQuery: String get() = _currentQuery ?: ""
+    override var currentQuery: String = ""
+        private set
 
-    override fun create(savedInstanceState: Bundle?) {
+    override fun create(savedQuery: String) {
         view.endLoading()
-        val query = savedInstanceState?.getString(QUERY_KEY) ?: return
-        onQueryTextSubmit(query)
+        onQueryTextSubmit(savedQuery)
     }
 
     override fun onQueryTextSubmit(query: String) {
-        _currentQuery = query
+        currentQuery = query
         view.startLoading()
         repository.getEvents(query)
                 .map { it.events }
@@ -63,16 +59,7 @@ class MainPresenter @Inject constructor(
                 .run(serialDisposable::set)
     }
 
-    override fun saveInstanceState(outState: Bundle?) {
-        val state = outState ?: return
-        _currentQuery?.let { state.putString(QUERY_KEY, it) }
-    }
-
     override fun destroy() {
         serialDisposable.dispose()
-    }
-
-    companion object {
-        private const val QUERY_KEY = "QUERY_KEY"
     }
 }
