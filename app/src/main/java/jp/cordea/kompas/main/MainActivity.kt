@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityMainBinding
+import jp.cordea.kompas.presentation.main.MainContract
+import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {

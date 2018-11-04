@@ -5,6 +5,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import jp.cordea.kompas.presentation.ActivityScope
+import jp.cordea.kompas.presentation.main.MainContract
+import jp.cordea.kompas.presentation.main.MainPresenter
 
 @Module
 interface MainActivityModule {
