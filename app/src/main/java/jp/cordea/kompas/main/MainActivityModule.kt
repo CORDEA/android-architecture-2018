@@ -4,7 +4,7 @@ import android.app.Activity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import jp.cordea.kompas.ActivityScope
+import jp.cordea.kompas.presentation.ActivityScope
 
 @Module
 interface MainActivityModule {

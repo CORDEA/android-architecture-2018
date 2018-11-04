@@ -3,7 +3,7 @@ package jp.cordea.kompas.detail
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import jp.cordea.kompas.ActivityScope
+import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.presentation.detail.DetailContract
 import jp.cordea.kompas.presentation.detail.DetailPresenter
 

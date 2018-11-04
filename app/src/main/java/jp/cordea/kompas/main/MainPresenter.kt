@@ -4,7 +4,7 @@ import android.os.Bundle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
-import jp.cordea.kompas.ActivityScope
+import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.infra.ConnpassRepository
 import javax.inject.Inject
 
