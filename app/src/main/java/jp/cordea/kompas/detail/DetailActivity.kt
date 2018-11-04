@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import dagger.android.AndroidInjection
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ActivityDetailBinding
 import jp.cordea.kompas.main.MainListItemViewModel
+import jp.cordea.kompas.presentation.detail.DetailContract
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {

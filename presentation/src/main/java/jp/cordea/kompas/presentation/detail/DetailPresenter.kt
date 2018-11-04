@@ -1,4 +1,4 @@
-package jp.cordea.kompas.detail
+package jp.cordea.kompas.presentation.detail
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
