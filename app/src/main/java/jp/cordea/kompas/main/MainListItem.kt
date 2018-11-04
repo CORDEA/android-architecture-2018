@@ -5,24 +5,25 @@ import com.xwray.groupie.databinding.BindableItem
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ListItemMainBinding
 import jp.cordea.kompas.infra.events.EventResponse
+import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
 @Parcelize
-class MainListItemViewModel(
-        val eventId: Int,
-        val title: String,
-        val catch: String,
-        val author: String,
-        val description: String,
-        val startedAt: String,
-        val endedAt: String,
-        val limit: Int,
-        val accepted: Int
-) : Parcelable {
+class MainListItemViewModelImpl(
+        override val eventId: Int,
+        override val title: String,
+        override val catch: String,
+        override val author: String,
+        override val description: String,
+        override val startedAt: String,
+        override val endedAt: String,
+        override val limit: Int,
+        override val accepted: Int
+) : Parcelable, MainListItemViewModel {
     companion object {
         fun from(response: EventResponse) =
-                MainListItemViewModel(
+                MainListItemViewModelImpl(
                         response.eventId,
                         response.title,
                         response.catch,
@@ -39,9 +40,9 @@ class MainListItemViewModel(
 class MainListItem @Inject constructor(
         private val navigator: MainNavigator
 ) : BindableItem<ListItemMainBinding>() {
-    private lateinit var model: MainListItemViewModel
+    private lateinit var model: MainListItemViewModelImpl
 
-    fun update(model: MainListItemViewModel) = apply { this.model = model }
+    fun update(model: MainListItemViewModelImpl) = apply { this.model = model }
 
     override fun getLayout(): Int = R.layout.list_item_main
 

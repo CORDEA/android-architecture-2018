@@ -5,7 +5,8 @@ import androidx.core.text.HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING
 import com.xwray.groupie.databinding.BindableItem
 import jp.cordea.kompas.R
 import jp.cordea.kompas.databinding.ListItemDescriptionBinding
-import jp.cordea.kompas.main.MainListItemViewModel
+import jp.cordea.kompas.main.MainListItemViewModelImpl
+import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 class DescriptionListItemViewModel(

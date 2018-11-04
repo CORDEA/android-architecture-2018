@@ -6,13 +6,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
 import jp.cordea.kompas.presentation.ActivityScope
 import jp.cordea.kompas.infra.ConnpassRepository
+import jp.cordea.kompas.presentation.main.MainListItemViewModel
 import javax.inject.Inject
 
 interface MainContract {
     interface View {
         fun startLoading()
         fun endLoading()
-        fun addItem(model: MainListItemViewModel)
+        fun addItem(model: MainListItemViewModelImpl)
     }
 
     interface Presenter {
@@ -48,7 +49,7 @@ class MainPresenter @Inject constructor(
                 .filter { it.isNotEmpty() }
                 .flatMapObservable { list ->
                     Observable.fromIterable(list)
-                            .map { MainListItemViewModel.from(it) }
+                            .map { MainListItemViewModelImpl.from(it) }
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

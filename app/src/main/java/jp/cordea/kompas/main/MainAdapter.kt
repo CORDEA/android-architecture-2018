@@ -8,5 +8,5 @@ import javax.inject.Provider
 class MainAdapter @Inject constructor(
         private val item: Provider<MainListItem>
 ) : GroupAdapter<ViewHolder>() {
-    fun add(model: MainListItemViewModel) = add(item.get().update(model))
+    fun add(model: MainListItemViewModelImpl) = add(item.get().update(model))
 }
